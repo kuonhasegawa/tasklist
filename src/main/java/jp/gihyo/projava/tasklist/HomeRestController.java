@@ -24,7 +24,7 @@ public class HomeRestController {
     List<HomeController.TaskItem> addItem(@RequestParam("task") String task,
                                           @RequestParam("deadline") String deadLine){
         String id = UUID.randomUUID().toString().substring(0, 8);
-        HomeController.TaskItem item = new HomeController.TaskItem(id, task, deadLine, false);
+        HomeController.TaskItem item = new HomeController.TaskItem(id, task, deadLine, "",false);
         this.dao.add(item);
         return this.dao.findAll();
     }
