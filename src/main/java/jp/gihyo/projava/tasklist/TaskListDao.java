@@ -39,9 +39,9 @@ public class TaskListDao {
                         row.get("id").toString(),
                         row.get("task").toString(),
                         row.get("deadline").toString(),
+                        row.get("memo").toString(),
                         (Boolean)row.get("done")))
                 .toList();
-
         return taskItems;
     }
     public int delete(String id){
@@ -49,10 +49,10 @@ public class TaskListDao {
         return number;
     }
     public int update(TaskItem taskItem){
-        int number = jdbcTemplate.update(
-                "UPDATE tasklist SET task = ?, deadline = ?,done = ? WHERE id = ?",
+        int number = jdbcTemplate.update("UPDATE tasklist SET task = ?, deadline = ?,memo = ?,done = ? WHERE id = ?",
                 taskItem.task(),
                 taskItem.deadline(),
+                taskItem.memo(),
                 taskItem.done(),
                 taskItem.id());
         return number;
