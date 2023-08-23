@@ -20,13 +20,25 @@
 </div>
 <div>
     <h2>現在のタスク一覧</h2>
+    <div>
+        <form action="/search_month">
+            <div class="row">
+                <div class="col"><input type="month" name="month"/></div>
+                <div class="col">
+                    <button type="submit" name="search_button" class="col btn btn-secondary btn-sm">検索</button>
+                </div>
+            </div>
+        </form>
+    </div>
     <table class="table table-striped">
         <thead>
         <tr>
             <th class="hidden">ID</th>
             <th>タスク</th>
             <th>期限</th>
+            <th>メモ</th>
             <th>状態</th>
+            <th>更新</th>
             <th>削除<!-- 削除ボタン --></th>
         </tr>
         </thead>
@@ -35,6 +47,7 @@
             <td th:text="${task.id}" class="hidden"></td>
             <td th:text="${task.task}"></td>
             <td th:text="${task.deadline}"></td>
+            <td th:text="${task.memo}"></td>
             <td th:text="${task.done} ? '完' : '未'"></td>
             <td>
                 <button type="submit" name="update_button" onclick="copyToDialog(this.parentElement.parentElement);" data-bs-toggle="modal" data-bs-target="#updatedialog" class="btn btn-primary">更新</button>
@@ -62,6 +75,8 @@
                     <input id="update_task" class="form-control" name="task" type="text"/>
                     <label for="update_deadline">期限</label>
                     <input id="update_deadline" class="form-control" name="deadline" type="date"/>
+                    <label for="update_memo">メモ</label>
+                    <input id="update_memo" class="form-control" name="memo" type="text"/>
                     <label for="update_status">状態</label>
                     <select id="update_status" class="form-select" name="done">
                         <option value="false">未完了</option>
@@ -82,7 +97,8 @@
         document.getElementById('update_id').value = row.cells[0].firstChild.data;
         document.getElementById('update_task').value = row.cells[1].firstChild.data;
         document.getElementById('update_deadline').value = row.cells[2].firstChild.data;
-        document.getElementById('update_status').selectedIndex=(row.cells[3].firstChild.data=='完了')?1:0;
+        document.getElementById('update_memo').value = row.cells[3].firstChild.data;
+        document.getElementById('update_status').selectedIndex=(row.cells[4].firstChild.data=='完了')?1:0;
 <!--        var dialog = document.getElementById('updatedialog');-->
 <!--        dialog.style.left= ((window.innerWidth - 500) / 2) + 'px';-->
 <!--        dialog.style.display='block';-->
@@ -116,7 +132,7 @@
             $obj.find("[name=id]").text(id);
             $obj.find("[name=task]").text(task);
             $obj.find("[name=deadline]").text(deadline);
-            $obj.find("[name=done]").text(done);
+            $obj.find("[name=done]").text(done? '完了' : '未完了');
             $("#task_list_body").append($obj); //テーブルに行を追加
           }
 
@@ -131,6 +147,7 @@
             <td  name="id" class="hidden"></td>
             <td name="task"></td>
             <td name="deadline"></td>
+            <td name="memo"></td>
             <td name="done"></td>
             <td>
                 <button type="submit" name="update_button" onclick="copyToDialog(this.parentElement.parentElement);" data-bs-toggle="modal" data-bs-target="#updatedialog" class="btn btn-primary">更新</button>
