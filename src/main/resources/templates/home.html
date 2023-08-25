@@ -25,11 +25,22 @@
             <div class="row">
                 <div class="col"><input type="month" name="month"/></div>
                 <div class="col">
+                    <input type="hidden" name="complete" value="0">
+                    <input type="checkbox" id="complete" name="complete" value="1" >
+                    <label for="complete">未完了</label>
                     <button type="submit" name="search_button" class="col btn btn-secondary btn-sm">検索</button>
                 </div>
             </div>
         </form>
     </div>
+<!--    <div>-->
+<!--        <form action="/search_complete">-->
+<!--            <input type="hidden" name="complete" value="0">-->
+<!--            <input type="checkbox" id="complete" name="complete" value="1" >-->
+<!--            <label for="complete">未完了</label>-->
+<!--            <button type="submit" name="search_button" class="col btn btn-secondary btn-sm">検索</button>-->
+<!--        </form>-->
+<!--    </div>-->
     <table class="table table-striped">
         <thead>
         <tr>
@@ -135,7 +146,6 @@
             $obj.find("[name=done]").text(done? '完了' : '未完了');
             $("#task_list_body").append($obj); //テーブルに行を追加
           }
-
 
         });
     }
